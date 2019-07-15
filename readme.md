@@ -6,7 +6,7 @@ A Framework for Rewriting DEX Files，Mainly for Android shell unpack,
 # Usage
 There are usage examples in library.cpp
 # eg.1
-Lookup all class
+lookup all class
 
 ```c++
 void lookup_all_class(dex_ir::Header *mHeader) {
@@ -16,7 +16,7 @@ void lookup_all_class(dex_ir::Header *mHeader) {
 ```
 
 # eg.2
-Look up all Dexcode，you can modify Dexcode.
+lookup all dexcode，you can modify dexcode.
 
 ```c++
 /**
