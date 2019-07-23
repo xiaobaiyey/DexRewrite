@@ -239,7 +239,7 @@ void DexWriter::WriteStringData(Stream *stream, dex_ir::StringData *string_data)
 void DexWriter::WriteStringDatas(Stream *stream) {
     const uint32_t start = stream->Tell();
     for (std::unique_ptr<dex_ir::StringData> &string_data : header_->GetCollections().StringDatas()) {
-        (stream, string_data.get());
+        WriteStringData(stream, string_data.get());
     }
     if (compute_offsets_ && start != stream->Tell()) {
         header_->GetCollections().SetStringDatasOffset(start);
