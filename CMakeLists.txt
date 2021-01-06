@@ -1,30 +1,19 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.10)
 project(DexRewrite)
 
-set(CMAKE_CXX_STANDARD 14)
-
-include_directories(include)
+set(CMAKE_CXX_STANDARD 17)
+add_subdirectory(external/libbase)
+add_subdirectory(external/libdex)
+include_directories(external)
 
 #dex src
-aux_source_directory(src/libdex DEX_SRC)
-
-aux_source_directory(src/libutil/ UTIL_SRC)
-
-
-
-aux_source_directory(./ test_src)
+aux_source_directory(./ src)
 
 add_executable(DexRewrite
-        ${DEX_SRC}
-        ${test_src}
-        ${UTIL_SRC}
+        ${src}
         )
 
 
 
 
-
-
-find_library(lib-z z)
-
-target_link_libraries(DexRewrite ${lib-z})
+target_link_libraries(DexRewrite z base dex)
