@@ -11,7 +11,7 @@ aux_source_directory(./ src)
 
 add_executable(DexRewrite
         ${src}
-        )
+        repairdex.cpp repairdex.h baserepair.cpp baserepair.h)
 
 
 
