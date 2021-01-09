@@ -19,13 +19,13 @@ lookup all class
 
 ```c++
 for (const auto &class_data : mHeader->ClassDatas()) {
-const char *class_name = class_data->GetClassDef()->ClassType()->GetStringId()->Data();
-for (auto &direct_method : *class_data.get()->DirectMethods()) {
-repairNopCode(direct_method->GetCodeItem());
-}
-for (auto &virtual_method: *class_data.get()->VirtualMethods()) {
-repairNopCode(virtual_method->GetCodeItem());
-}
+    const char *class_name = class_data->GetClassDef()->ClassType()->GetStringId()->Data();
+    for (auto &direct_method : *class_data.get()->DirectMethods()) {
+        repairNopCode(direct_method->GetCodeItem());
+    }   
+    for (auto &virtual_method: *class_data.get()->VirtualMethods()) {
+        repairNopCode(virtual_method->GetCodeItem());
+    }
 }
 ```
 
@@ -35,12 +35,12 @@ lookup all method
 
 ```c++
 for (const auto &class_data : mHeader->ClassDatas()) {
-for (auto &direct_method : *class_data.get()->DirectMethods()) {
-repairNopCode(direct_method->GetCodeItem());
-}
-for (auto &virtual_method: *class_data.get()->VirtualMethods()) {
-repairNopCode(virtual_method->GetCodeItem());
-}
+    for (auto &direct_method : *class_data.get()->DirectMethods()) {
+        repairNopCode(direct_method->GetCodeItem());
+    }
+    for (auto &virtual_method: *class_data.get()->VirtualMethods()) {
+        repairNopCode(virtual_method->GetCodeItem());
+    }
 }
 ```
 
@@ -48,8 +48,8 @@ or
 
 ```c++
 for (const auto &methodItem : mHeader->MethodItems()) {
-auto index = methodItem.first;
-auto method_item = methodItem.second;
+    auto index = methodItem.first;
+    auto method_item = methodItem.second;
 }
 
 ```
