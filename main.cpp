@@ -5,6 +5,7 @@
 #include <libdex/header.h>
 #include <libdex/decompilation.h>
 #include <libdex/decompile_method.h>
+#include <libdex/dex_writer.h>
 #include <libbase/file.h>
 #include <libbase/logging.h>
 #include <assert.h>
@@ -45,7 +46,7 @@ int main(int argc, char **argv) {
         if (method_id != nullptr) {
 
             //get all methods which call "exit"
-            for (const auto &methodRef : method_id->GetMethodRefs()) {
+            for (const auto &methodRef: method_id->GetMethodRefs()) {
                 dex_ir::MethodItem *ref_method_item = mHeader->MethodItems()[methodRef];
                 if (ref_method_item == nullptr) {
                     continue;
@@ -65,7 +66,8 @@ int main(int argc, char **argv) {
     } else {
         LOG(ERROR) << "load dex references fail!!!!";
     }
-
+    //output
+    dex_ir::DexWriter::Output(mHeader.get(), "out.dex");
 
     return 0;
 }

@@ -2,6 +2,7 @@
 // Created by xiaob on 2020/1/2.
 //
 #include "annotation.h"
+
 namespace dex_ir {
 
     EncodedValue::EncodedValue(uint8_t type) : type_(type) {}
@@ -70,11 +71,11 @@ namespace dex_ir {
 
     MethodHandleItem *EncodedValue::GetMethodHandle() const { return u_.method_handle_val_; }
 
-    EncodedArrayItem *EncodedValue::GetEncodedArray() const { return encoded_array_.get();  }
+    EncodedArrayItem *EncodedValue::GetEncodedArray() const { return encoded_array_.get(); }
 
-    EncodedAnnotation *EncodedValue::GetEncodedAnnotation() const {return encoded_annotation_.get(); }
+    EncodedAnnotation *EncodedValue::GetEncodedAnnotation() const { return encoded_annotation_.get(); }
 
-    EncodedAnnotation *EncodedValue::ReleaseEncodedAnnotation() { return encoded_annotation_.release();}
+    EncodedAnnotation *EncodedValue::ReleaseEncodedAnnotation() { return encoded_annotation_.release(); }
 
     EncodedValue::~EncodedValue() {
 

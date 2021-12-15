@@ -66,7 +66,7 @@ namespace dex_ir {
     }
 
     void Decompilation::loadBytecodes(uint32_t idx, const dex_ir::CodeItem *code) {
-        for (const libdex::DexInstructionPcPair &inst : code->Instructions()) {
+        for (const libdex::DexInstructionPcPair &inst: code->Instructions()) {
             const uint32_t insn_width = inst->SizeInCodeUnits();
             if (insn_width == 0) {
                 LOG(WARNING) << "GLITCH: zero-width instruction at idx=0x" << std::hex << inst.DexPc();
@@ -178,7 +178,7 @@ namespace dex_ir {
     }
 
     StringId *Decompilation::getStringIdByValue(std::string value) const {
-        for (std::unique_ptr<StringId> &stringId : header_->StringIds()) {
+        for (std::unique_ptr<StringId> &stringId: header_->StringIds()) {
             if (value.compare(stringId->Data()) == 0) {
                 return stringId.get();
             }
@@ -189,7 +189,7 @@ namespace dex_ir {
     std::set<StringId *> Decompilation::getStringIdRegex(std::string value_regex) const {
         std::regex regex(value_regex);
         std::set<StringId *> results;
-        for (std::unique_ptr<StringId> &stringId : header_->StringIds()) {
+        for (std::unique_ptr<StringId> &stringId: header_->StringIds()) {
             std::string data = stringId->Data();
             if (data.empty())continue;
             if (std::regex_match(data, regex)) {
@@ -201,7 +201,7 @@ namespace dex_ir {
 
     std::set<StringId *> Decompilation::getStringIdAllContains(std::string value) const {
         std::set<StringId *> string_ids;
-        for (std::unique_ptr<StringId> &stringId : header_->StringIds()) {
+        for (std::unique_ptr<StringId> &stringId: header_->StringIds()) {
             if (stringId->Data() == nullptr)continue;
             std::string temp = stringId->Data();
             if (temp.find(value) != std::string::npos) {
@@ -212,7 +212,7 @@ namespace dex_ir {
     }
 
     StringId *Decompilation::getStringIdFirstContains(std::string value) const {
-        for (std::unique_ptr<StringId> &stringId : header_->StringIds()) {
+        for (std::unique_ptr<StringId> &stringId: header_->StringIds()) {
             if (stringId->Data() == nullptr)continue;
             std::string temp = stringId->Data();
             if (temp.find(value) != std::string::npos) {
@@ -231,7 +231,7 @@ namespace dex_ir {
      */
     MethodId *
     Decompilation::getMethodIdBySignatrue(std::string class_name, std::string method_name, std::string signature) {
-        for (const auto &method_id : header_->MethodIds()) {
+        for (const auto &method_id: header_->MethodIds()) {
             if (class_name.compare(method_id->Class()->GetStringId()->Data()) != 0) {
                 continue;
             }
@@ -248,7 +248,7 @@ namespace dex_ir {
 
     FieldId *
     Decompilation::getFieldIdBySignatrue(std::string class_name, std::string field_name, std::string signature) {
-        for (const auto &field_id : header_->FieldIds()) {
+        for (const auto &field_id: header_->FieldIds()) {
             if (class_name.compare(field_id->Class()->GetStringId()->Data()) != 0) {
                 continue;
             }
@@ -264,7 +264,7 @@ namespace dex_ir {
     }
 
     TypeId *Decompilation::getTypeIdIdBySignatrue(std::string value) const {
-        for (const auto &type_id : header_->TypeIds()) {
+        for (const auto &type_id: header_->TypeIds()) {
             if (value == type_id->GetStringId()->Data()) {
                 return type_id.get();
             }
@@ -279,7 +279,7 @@ namespace dex_ir {
         std::regex method_regex(method_name_regex);
         std::regex signature_regex(signature_regex_);
 
-        for (const auto &method_id : header_->MethodIds()) {
+        for (const auto &method_id: header_->MethodIds()) {
             std::string class_name = method_id->Class()->GetStringId()->Data();
             if (!std::regex_match(class_name, classe_regex)) {
                 continue;
@@ -300,7 +300,7 @@ namespace dex_ir {
     std::set<TypeId *> Decompilation::getTypeIdIdByRegex(std::string value_regex) const {
         std::regex regex(value_regex);
         std::set<TypeId *> results;
-        for (const auto &type_id : header_->TypeIds()) {
+        for (const auto &type_id: header_->TypeIds()) {
             std::string data = type_id->GetStringId()->Data();
             if (data.empty())continue;
             if (std::regex_match(data, regex)) {
@@ -317,7 +317,7 @@ namespace dex_ir {
         std::regex method_regex(field_name_regex);
         std::regex signature_regex(signature_regex_);
 
-        for (const auto &field_id : header_->FieldIds()) {
+        for (const auto &field_id: header_->FieldIds()) {
             std::string class_name = field_id->Class()->GetStringId()->Data();
             if (!std::regex_match(class_name, classe_regex)) {
                 continue;

@@ -9,6 +9,7 @@
 #include "libbase/stringprintf.h"
 #include "libdex/dex/dex_file.h"
 #include "libdex/dex/dex_instruction-inl.h"
+
 #define __STDC_FORMAT_MACROS
 
 #include <inttypes.h>
@@ -24,6 +25,7 @@
 #ifndef PRIx64
 #define PRIx64 "lx"
 #endif
+
 /*
  * Gets 2 little-endian bytes.
  */
@@ -220,7 +222,7 @@ void dex_ir::DecompileMethod::process() {
                      << GetMethodName() + ":" << GetSignature() << " maybe abstract or native";
         return;
     }
-    for (const libdex::DexInstructionPcPair &inst : methodItem_->GetCodeItem()->Instructions()) {
+    for (const libdex::DexInstructionPcPair &inst: methodItem_->GetCodeItem()->Instructions()) {
         const uint32_t insn_width = inst->SizeInCodeUnits();
         if (insn_width == 0) {
             LOG(WARNING) << "GLITCH: zero-width instruction at idx=0x" << std::hex << inst.DexPc();
@@ -647,7 +649,7 @@ dex_ir::DecompileMethod::processInstruction(const dex_ir::CodeItem *code, uint32
             decompileCode.dest_register = dec_insn->VRegA();
             decompileCode.op_value = dec_insn->WideVRegB();
             format_str += base::StringPrintf(" v%d, #double %g // #%016"
-            PRIx64, dec_insn->VRegA(), conv.d, dec_insn->WideVRegB());
+                                             PRIx64, dec_insn->VRegA(), conv.d, dec_insn->WideVRegB());
             break;
         }
             // NOT SUPPORTED:
@@ -726,7 +728,7 @@ std::string dex_ir::DecompileMethod::ToString() const {
         return " ";
     }
     std::string result;
-    for (const auto &methodbodyline : methodbodylines) {
+    for (const auto &methodbodyline: methodbodylines) {
         result.append(methodbodyline.dump_string);
         result.append("\r\n");
     }
@@ -774,7 +776,7 @@ int64_t dex_ir::DecompileMethod::GetRegisterOpValue(uint32_t register_name, uint
         return -1;
     }
     int64_t result = -1;
-    for (const auto &methodbodyline : methodbodylines) {
+    for (const auto &methodbodyline: methodbodylines) {
         if (limit_pc != 0 && methodbodyline.pc_ >= limit_pc) {
             return result;
         }
@@ -790,7 +792,7 @@ std::string dex_ir::DecompileMethod::GetRegisterOpString(uint32_t register_name,
         return std::string();
     }
     uint32_t result_index_id = -1;
-    for (const auto &methodbodyline : methodbodylines) {
+    for (const auto &methodbodyline: methodbodylines) {
         if (limit_pc != 0 && methodbodyline.pc_ >= limit_pc) {
             return std::string();
         }

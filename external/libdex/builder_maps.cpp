@@ -292,7 +292,7 @@ namespace dex_ir {
                 dex_file.GetHiddenapiClassDataAtOffset(offset);
         DCHECK(hiddenapi_class_data == dex_file.GetHiddenapiClassData());
 
-        for (auto &class_def : header_->ClassDefs()) {
+        for (auto &class_def: header_->ClassDefs()) {
             uint32_t index = class_def->GetIndex();
             ClassData *class_data = class_def->GetClassData();
             const uint8_t *ptr = hiddenapi_class_data->GetFlagsPointer(index);
@@ -301,16 +301,16 @@ namespace dex_ir {
             if (ptr != nullptr) {
                 DCHECK(class_data != nullptr);
                 flags = std::make_unique<HiddenapiFlagsMap>();
-                for (const dex_ir::FieldItem &field : *class_data->StaticFields()) {
+                for (const dex_ir::FieldItem &field: *class_data->StaticFields()) {
                     flags->emplace(&field, base::DecodeUnsignedLeb128(&ptr));
                 }
-                for (const dex_ir::FieldItem &field : *class_data->InstanceFields()) {
+                for (const dex_ir::FieldItem &field: *class_data->InstanceFields()) {
                     flags->emplace(&field, base::DecodeUnsignedLeb128(&ptr));
                 }
-                for (const auto &method : *class_data->DirectMethods()) {
+                for (const auto &method: *class_data->DirectMethods()) {
                     flags->emplace(method.get(), base::DecodeUnsignedLeb128(&ptr));
                 }
-                for (const auto &method : *class_data->VirtualMethods()) {
+                for (const auto &method: *class_data->VirtualMethods()) {
                     flags->emplace(method.get(), base::DecodeUnsignedLeb128(&ptr));
                 }
             }
@@ -486,12 +486,12 @@ namespace dex_ir {
         if (accessor.TriesSize() > 0) {
             tries = new TryItemVector();
             handler_list = new CatchHandlerVector();
-            for (const dex::TryItem &disk_try_item : accessor.TryItems()) {
+            for (const dex::TryItem &disk_try_item: accessor.TryItems()) {
                 uint32_t start_addr = disk_try_item.start_addr_;
                 uint16_t insn_count = disk_try_item.insn_count_;
                 uint16_t handler_off = disk_try_item.handler_off_;
                 const CatchHandler *handlers = nullptr;
-                for (std::unique_ptr<const CatchHandler> &existing_handlers : *handler_list) {
+                for (std::unique_ptr<const CatchHandler> &existing_handlers: *handler_list) {
                     if (handler_off == existing_handlers->GetListOffset()) {
                         handlers = existing_handlers.get();
                         break;
@@ -520,7 +520,7 @@ namespace dex_ir {
             while (handlers_size > handler_list->size()) {
                 bool already_added = false;
                 uint16_t handler_off = handlers_data - handlers_base;
-                for (std::unique_ptr<const CatchHandler> &existing_handlers : *handler_list) {
+                for (std::unique_ptr<const CatchHandler> &existing_handlers: *handler_list) {
                     if (handler_off == existing_handlers->GetListOffset()) {
                         already_added = true;
                         break;
@@ -593,13 +593,13 @@ namespace dex_ir {
             ClassAccessor accessor(dex_file, class_def);
             // Static fields.
             FieldItemVector *static_fields = new FieldItemVector();
-            for (const ClassAccessor::Field &field : accessor.GetStaticFields()) {
+            for (const ClassAccessor::Field &field: accessor.GetStaticFields()) {
                 FieldId *field_item = header_->FieldIds()[field.GetIndex()];
                 uint32_t access_flags = field.GetAccessFlags();
                 static_fields->emplace_back(access_flags, field_item);
             }
             FieldItemVector *instance_fields = new FieldItemVector();
-            for (const ClassAccessor::Field &field : accessor.GetInstanceFields()) {
+            for (const ClassAccessor::Field &field: accessor.GetInstanceFields()) {
                 FieldId *field_item = header_->FieldIds()[field.GetIndex()];
                 uint32_t access_flags = field.GetAccessFlags();
                 instance_fields->emplace_back(access_flags, field_item);

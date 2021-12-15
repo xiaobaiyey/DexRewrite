@@ -1,21 +1,36 @@
-# DexRewrite
+## 介绍
 
-1. A Framework for Rewriting DEX Files，Mainly for Android shell unpack,
-2. Find references to related fields
-3. Simple decompilation of Dex file
-4. ...
-# How to build?
+**DexRewrite** 是一个针对Android dex文件分析、解析、重构的 C++ 库
 
-1. Build in android studio with cmake
-2. Build in clion with cmake
+## 如何使用
 
-# Usage
+1. 使用 [Android Studio](https://developer.android.google.cn/studio/) 和 Cmake编译
+2. 使用 [Jetbrains Clion](https://www.jetbrains.com/clion/) 和 Cmake编译
 
-There are usage examples in main.cpp or repairdex.cpp
+## 核心功能
 
-# eg.1
+* [X]  解析整个dex文件。
+* [X]  统计字符串、函数、字段引用。
+* [X]  反编译指定函数
+* [X]  Android隐藏API调用扫描
 
-lookup all class
+## 待发布功能
+
+* [X]  Dex文件合并（已完成，测试中，待开源）
+* [X]  Dex ASM汇编支持（已经完成、测试中，待开源）
+
+## 待修复BUG
+
+* [ ]  Dex文件合并后，各个索引值排序问题
+* [ ]  ASM 框架插入代码 goto、goto/16、goto/32 跳转存在问题
+
+## 参考代码
+
+相关使用可以参考 main.cpp repairdex.cpp文件
+
+### 参考代码一
+
+遍历整个dex文件中的所有类
 
 ```c++
 for (const auto &class_data : mHeader->ClassDatas()) {
@@ -29,9 +44,9 @@ for (const auto &class_data : mHeader->ClassDatas()) {
 }
 ```
 
-# eg.2
+### 参考代码二
 
-lookup all method
+遍历dex文件中所有函数实体
 
 ```c++
 for (const auto &class_data : mHeader->ClassDatas()) {
@@ -44,7 +59,7 @@ for (const auto &class_data : mHeader->ClassDatas()) {
 }
 ```
 
-or
+或者
 
 ```c++
 for (const auto &methodItem : mHeader->MethodItems()) {
@@ -54,9 +69,9 @@ for (const auto &methodItem : mHeader->MethodItems()) {
 
 ```
 
-# eg.3
+### 参考代码三
 
-lookup all codeitem
+遍历所有Dex文件中的Codeitem实体
 
 ```c++
 
@@ -66,9 +81,21 @@ for (const auto &codeItem : mHeader->CodeItems()) {
 
 ```
 
-# About
+### 参考代码四
 
-Modified from AOSP
+将dex文件输出到文件
+
+```C++
+dex_ir::DexWriter::Output(mHeader.get(), "out.dex");
+```
+
+## 关于代码仓库
+
+致力于脱离Java环境，实现一套可以对Dex文件反编译、字节码编译的框架。开源版本目前仅限于重写Dex文件、反编译Dex文件。
+
+至于DexASM 和 DexMerger 相关代码已经实现，正在测试中，目前用于公司产品上，稳定后将会开源。
+
+## 引用
 
 [https://android.googlesource.com/platform/art/+/master/dexlayout/](https://android.googlesource.com/platform/art/+/master/dexlayout/)
 
